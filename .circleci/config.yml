@@ -1,6 +1,6 @@
 version: 2
 references:
-  - &working_directory ~/base
+  - &working_directory ~/decimal-math-ops
   - &automerge_branch_pattern /^am\-.*/
   - &container_config
       working_directory: *working_directory
