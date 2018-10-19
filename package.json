@@ -1,6 +1,6 @@
 {
   "name": "decimal-math-ops",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "main": "dist/index.js",
   "scripts": {
     "precommit": "ciq package check-file-links",
