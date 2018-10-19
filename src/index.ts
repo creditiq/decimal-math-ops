@@ -1,7 +1,7 @@
 
 import Decimal from 'decimal.js';
+import _mapValues = require('lodash/mapValues');
 import _pick = require('lodash/pick');
-import _reduce = require('lodash/reduce');
 
 // tslint:disable-next-line:ban-types
 type FunctionPropertyNames<T> = { [K in keyof T]: T[K] extends Function ? K : never }[keyof T];
@@ -58,7 +58,7 @@ export const DecimalMath = getMathOps({
     if (typeof a !== 'number') {
       throw new TypeError('built-in math factory only accepts numbers');
     }
-    return new Decimal(a);
+    return a;
   },
 
   add: (a: Decimal, b: Decimal) => {
@@ -187,5 +187,10 @@ export const DecimalMath = getMathOps({
 });
 
 function getMathOps<T extends MathOps>(t: T) {
-  return t;
+  return _mapValues(t, (fn, key) => key !== 'factory' ?
+    (...args: any[]) => {
+      const result = fn.apply(null, args.map((a) => new Decimal(a)));
+      return result && result.toNumber();
+    } : fn
+  );
 }
