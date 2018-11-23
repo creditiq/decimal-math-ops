@@ -186,10 +186,10 @@ export const DecimalMath = getMathOps({
   // },
 });
 
-function getMathOps<T extends MathOps>(t: T) : any {
+function getMathOps<T extends MathOps>(t: T): any {
   return _mapValues(t, (fn, key) => key !== 'factory' ?
     (...args: any[]) => {
-      const result = fn.apply(null, args.map((a) => new Decimal(a)));
+      const result = fn.apply(Decimal, args.map((a) => new Decimal(a)));
       return result && result.toNumber();
     } : fn
   );
