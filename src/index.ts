@@ -162,16 +162,16 @@ export const DecimalMath = getMathOps({
   //   // tslint:disable-next-line:no-bitwise
   //   return (a >>> b);
   // },
-  // // logical
-  // logicalOR: (a: Decimal, b: Decimal) => {
-  //   return a || b;
-  // },
-  // logicalXOR: (a: Decimal, b: Decimal) => {
-  //   return a !== b;
-  // },
-  // logicalAND: (a: Decimal, b: Decimal) => {
-  //   return a && b;
-  // },
+  // logical
+  logicalOR: (a: number, b: number) => {
+    return a || b;
+  },
+  logicalXOR: (a: number, b: number) => {
+    return a !== b;
+  },
+  logicalAND: (a: number, b: number) => {
+    return a && b;
+  },
 
   // // bitwise
   // bitwiseOR: (a: Decimal, b: Decimal) => {
