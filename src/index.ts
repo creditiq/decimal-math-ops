@@ -190,7 +190,7 @@ function getMathOps<T extends MathOps>(t: T): any {
   return _mapValues(t, (fn, key) => key !== 'factory' ?
     (...args: any[]) => {
       const result = fn.apply(Decimal, args.map((a) => new Decimal(a)));
-      return result && result.toNumber();
+      return result != undefined && result.toNumber ? result.toNumber() : result;
     } : fn
   );
 }
