@@ -54,7 +54,10 @@ export const DecimalMath = getMathOps({
   log1p: () => { /* nothing */ },
   imul: () => { /* nothing */ },
   ...pickedDecimal,
-  factory: (a: number) => {
+  factory: (a: number | undefined) => {
+    if (a == undefined) {
+      return undefined;
+    }
     if (typeof a !== 'number') {
       throw new TypeError('built-in math factory only accepts numbers');
     }
@@ -189,6 +192,9 @@ export const DecimalMath = getMathOps({
 function getMathOps<T extends MathOps>(t: T): any {
   return _mapValues(t, (fn, key) => key !== 'factory' ?
     (...args: any[]) => {
+      if (args.some((a) => a == undefined)) {
+        return undefined;
+      }
       const result = fn.apply(Decimal, args.map((a) => new Decimal(a)));
       return result != undefined && result.toNumber ? result.toNumber() : result;
     } : fn
