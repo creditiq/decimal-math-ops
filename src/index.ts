@@ -166,13 +166,13 @@ export const DecimalMath = getMathOps({
   //   return (a >>> b);
   // },
   // logical
-  logicalOR: (a: number, b: number) => {
+  logicalOR: (a: number | undefined, b: number | undefined) => {
     return a || b;
   },
-  logicalXOR: (a: number, b: number) => {
+  logicalXOR: (a: number | undefined, b: number | undefined) => {
     return a !== b;
   },
-  logicalAND: (a: number, b: number) => {
+  logicalAND: (a: number | undefined, b: number | undefined) => {
     return a && b;
   },
 
@@ -192,6 +192,11 @@ export const DecimalMath = getMathOps({
 function getMathOps<T extends MathOps>(t: T): any {
   return _mapValues(t, (fn, key) => key !== 'factory' ?
     (...args: any[]) => {
+      if (key === 'logicalOR' ||
+        key === 'logicalXOR' ||
+        key === 'logicalAND') {
+        return fn.apply(null, args); // raw apply for logical
+      }
       if (args.some((a) => a == undefined)) {
         return undefined;
       }
