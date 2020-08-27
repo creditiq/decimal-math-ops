@@ -195,12 +195,12 @@ function getMathOps<T extends MathOps>(t: T): any {
       if (key === 'logicalOR' ||
         key === 'logicalXOR' ||
         key === 'logicalAND') {
-        return fn.apply(null, args); // raw apply for logical
+        return (fn as any).apply(null, args); // raw apply for logical
       }
       if (args.some((a) => a == undefined)) {
         return undefined;
       }
-      const result = fn.apply(Decimal, args.map((a) => new Decimal(a)));
+      const result = (fn as any).apply(Decimal, args.map((a) => new Decimal(a)));
       return result != undefined && result.toNumber ? result.toNumber() : result;
     } : fn
   );
