@@ -2,7 +2,7 @@ import Decimal from 'decimal.js';
 import _mapValues = require('lodash/mapValues');
 import _pick = require('lodash/pick');
 
-// tslint:disable-next-line:ban-types
+// eslint-disable-next-line @typescript-eslint/ban-types
 type FunctionPropertyNames<T> = { [K in keyof T]: T[K] extends Function ? K : never }[keyof T];
 export type MathOps = Record<FunctionPropertyNames<Math>, any>;
 
@@ -162,15 +162,12 @@ export const DecimalMath = getMathOps({
   // methods implemented by simple math module but that i think we don't need with decimal
   // // shift
   // shiftRight: (a: Decimal, b: Decimal) => {
-  //   // tslint:disable-next-line:no-bitwise
   //   return (a >> b);
   // },
   // shiftLeft: (a: Decimal, b: Decimal) => {
-  //   // tslint:disable-next-line:no-bitwise
   //   return (a << b);
   // },
   // unsignedRightShift: (a: Decimal, b: Decimal) => {
-  //   // tslint:disable-next-line:no-bitwise
   //   return (a >>> b);
   // },
   // logical
