@@ -1,4 +1,3 @@
-
 import Decimal from 'decimal.js';
 import _mapValues = require('lodash/mapValues');
 import _pick = require('lodash/pick');
@@ -44,15 +43,25 @@ const mathKeys = {
   // imul: ''
 };
 
-const mathKeyArray = (Object.keys(mathKeys) as Array<keyof typeof mathKeys>);
+const mathKeyArray = Object.keys(mathKeys) as Array<keyof typeof mathKeys>;
 const pickedDecimal = _pick(Decimal, mathKeyArray);
 
 export const DecimalMath = getMathOps({
-  clz32: () => { /* nothing */ },
-  expm1: () => { /* nothing */ },
-  fround: () => { /* nothing */ },
-  log1p: () => { /* nothing */ },
-  imul: () => { /* nothing */ },
+  clz32: () => {
+    /* nothing */
+  },
+  expm1: () => {
+    /* nothing */
+  },
+  fround: () => {
+    /* nothing */
+  },
+  log1p: () => {
+    /* nothing */
+  },
+  imul: () => {
+    /* nothing */
+  },
   ...pickedDecimal,
   factory: (a: number | undefined) => {
     if (a == undefined) {
@@ -80,7 +89,6 @@ export const DecimalMath = getMathOps({
     return a.mod(b);
   },
   factorial: (a: Decimal) => {
-
     let res = new Decimal(1);
     for (let i = 2; a.greaterThan(i); i += 1) {
       res = res.mul(i);
@@ -98,7 +106,7 @@ export const DecimalMath = getMathOps({
     if (root.equals(0)) {
       throw new Error('Root must be non-zero');
     }
-    if (a.lessThan(0) && !(Decimal.abs(root).mod(2).equals(1))) {
+    if (a.lessThan(0) && !Decimal.abs(root).mod(2).equals(1)) {
       throw new Error('Root must be odd when a is negative.');
     }
 
@@ -190,18 +198,21 @@ export const DecimalMath = getMathOps({
 });
 
 function getMathOps<T extends MathOps>(t: T): any {
-  return _mapValues(t, (fn, key) => key !== 'factory' ?
-    (...args: any[]) => {
-      if (key === 'logicalOR' ||
-        key === 'logicalXOR' ||
-        key === 'logicalAND') {
-        return (fn as any).apply(null, args); // raw apply for logical
-      }
-      if (args.some((a) => a == undefined)) {
-        return undefined;
-      }
-      const result = (fn as any).apply(Decimal, args.map((a) => new Decimal(a)));
-      return result != undefined && result.toNumber ? result.toNumber() : result;
-    } : fn
+  return _mapValues(t, (fn, key) =>
+    key !== 'factory'
+      ? (...args: any[]) => {
+          if (key === 'logicalOR' || key === 'logicalXOR' || key === 'logicalAND') {
+            return (fn as any).apply(null, args); // raw apply for logical
+          }
+          if (args.some((a) => a == undefined)) {
+            return undefined;
+          }
+          const result = (fn as any).apply(
+            Decimal,
+            args.map((a) => new Decimal(a))
+          );
+          return result != undefined && result.toNumber ? result.toNumber() : result;
+        }
+      : fn
   );
 }
