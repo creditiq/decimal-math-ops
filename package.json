@@ -1,6 +1,6 @@
 {
   "name": "decimal-math-ops",
-  "version": "2.1.5",
+  "version": "2.1.6",
   "main": "dist/index.js",
   "scripts": {
     "postinstall": "if ! pwd | grep -q node_modules ; then patch-package; fi",
