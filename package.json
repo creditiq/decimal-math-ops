@@ -65,7 +65,7 @@
   },
   "typings": "dist/index.d.ts",
   "description": "placeholder",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "config": {
     "commitizen": {
       "path": "cz-conventional-changelog"
